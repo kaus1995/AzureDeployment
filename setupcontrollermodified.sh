@@ -1,6 +1,5 @@
 #!/bin/bash
 
-sudo -i
 #  Get controller username and password as input. It is used as default for the controller.
 #
 
