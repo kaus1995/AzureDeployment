@@ -284,9 +284,9 @@ echo "Starting to setup Kubernetes master..."
 
 # Initialize a kubernetes cluster on the current node.
 #
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --kubernetes-version=$KUBE_VERSION
+sudo kubeadm init --pod-network-cidr=/16 --kubernetes-version=$KUBE_VERSION
 
-mkdir -p $HOME/.kube
+sudo mkdir -p $HOME/.kube
 
 sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u $USER):$(id -g $USER) $HOME/.kube/config
