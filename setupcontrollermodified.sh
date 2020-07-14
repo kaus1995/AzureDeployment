@@ -2,6 +2,8 @@
 
 #  Get controller username and password as input. It is used as default for the controller.
 #
+echo "$USER"
+echo "$HOME"
 
 export AZDATA_USERNAME=arcadmin
 echo $AZDATA_USERNAME
@@ -90,7 +92,7 @@ echo $ARC_DC_REGION
 
 # This is a script to create single-node Kubernetes cluster and deploy Azure Arc Data Controller on it.
 #
-export AZUREARCDATACONTROLLER_DIR=aadatacontroller
+export AZUREARCDATACONTROLLER_DIR=/home/AzureUser/aadatacontroller
 
 # Name of virtualenv variable used.
 #
@@ -282,14 +284,18 @@ echo ""
 echo "#############################################################################"
 echo "Starting to setup Kubernetes master..."
 
+
+#echo "Checking the connection with the container image registry"
+#sudo kubeadm config images pull
+
 # Initialize a kubernetes cluster on the current node.
 #
-sudo kubeadm init --pod-network-cidr=/16 --kubernetes-version=$KUBE_VERSION
+sudo kubeadm init --pod-network-cidr=10.244.0.0/24 --kubernetes-version=$KUBE_VERSION
 
-sudo mkdir -p $HOME/.kube
+sudo mkdir -p /root/.kube
 
-sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u $USER):$(id -g $USER) $HOME/.kube/config
+sudo cp -f /etc/kubernetes/admin.conf /root/.kube/config
+sudo chown $(id -u root):$(id -g root) /root/.kube/config
 
 # To enable a single node cluster remove the taint that limits the first node to master only service.
 #
